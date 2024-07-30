@@ -1,10 +1,14 @@
-import { LogoutButton } from '@/components/custom/logout-button';
+import { getResumeListService } from '@/data/services/resume-service';
+import { ResumeList } from '@/components/resume/resume-list';
+import CreateNewResume from '@/components/resume/create-new-resume';
 
-export default function DashboardRoute() {
+export default async function DashboardRoute() {
+  const resumeList = await getResumeListService();
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
-      <h1>Dashboard</h1>
-      <LogoutButton />
+    <div className="flex flex-wrap justify-normal items-center gap-4 p-4 min-h-screen bg-gray-100 dark:bg-gray-900">
+      <ResumeList resumeList={resumeList} />
+      <CreateNewResume />
     </div>
   );
 }
