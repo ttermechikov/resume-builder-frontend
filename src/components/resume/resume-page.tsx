@@ -5,7 +5,7 @@ import React, {
   ReactNode,
   forwardRef,
 } from 'react';
-import { createRoot } from 'react-dom/client';
+import ReactDOM from 'react-dom';
 
 const A4_HEIGHT_MM = 297;
 const A4_HEIGHT_PX = A4_HEIGHT_MM * 3.7795275591; // Approximate conversion to pixels
@@ -24,7 +24,6 @@ const A4Page: React.FC<A4PageProps> = ({ children }) => (
       backgroundColor: 'white',
       boxShadow: '0 0 10px rgba(0,0,0,0.1)',
       overflow: 'hidden',
-      pageBreakAfter: 'always',
     }}
   >
     {children}
@@ -51,8 +50,8 @@ const AutoPaginate = forwardRef<HTMLDivElement, AutoPaginateProps>(
           const tempContainer = document.createElement('div');
           measureRef.current.appendChild(tempContainer);
 
-          const root = createRoot(tempContainer);
-          root.render(<>{element}</>);
+          // eslint-disable-next-line react/no-deprecated
+          ReactDOM.render(<>{element}</>, tempContainer);
 
           requestAnimationFrame(() => {
             if (!measureRef.current) {

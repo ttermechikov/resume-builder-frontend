@@ -43,12 +43,11 @@ export default function EditableElement({
 
   return (
     <div
-      data-text-cond={!isEmpty}
-      data-text={value}
       className={cn(
         'inline-block cursor-text group',
         'hover:outline-dashed hover:outline-1 hover:outline-[#77858d]',
         'focus-within:outline-dashed focus-within:outline-1 focus-within:outline-[#77858d]',
+        'editable-element',
         className,
       )}
     >

@@ -51,15 +51,19 @@ export default function ResumeEditor({ resume }: ResumeEditorProps) {
     if (!contentRef.current) return;
 
     const opt = {
-      margin: 0,
+      margin: [-6, 0],
+      padding: 0,
       filename: `${resume.Title || 'resume'}.pdf`,
       image: { type: 'jpeg', quality: 0.98 },
       html2canvas: { scale: 2 },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-      logging: true,
     };
 
-    html2pdf().from(contentRef.current).set(opt).save();
+    try {
+      html2pdf().from(contentRef.current).set(opt).save();
+    } catch (e) {
+      console.error('Print error', e);
+    }
   };
 
   const updateResume = async (resume: Partial<Resume>) => {
@@ -236,9 +240,39 @@ export default function ResumeEditor({ resume }: ResumeEditorProps) {
     handleDynamicComponentChange(data);
   };
 
+  const renderNewComponentAddBlock = () => {
+    return availableComponentsToAdd.length ? (
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <button className="p-2 text-white bg-blue-500 hover:bg-blue-600 transition-colors">
+            <Plus size={20} />
+          </button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          {availableComponentsToAdd.map((dynamicComponentName) => (
+            <DropdownMenuItem
+              key={dynamicComponentName}
+              onClick={() =>
+                addDynamicComponent(
+                  dynamicComponentName as ResumeZoneDynamicComponentName,
+                )
+              }
+            >
+              {
+                dynamicComponentsNamesMap[
+                  dynamicComponentName as ResumeZoneDynamicComponentName
+                ]
+              }
+            </DropdownMenuItem>
+          ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
+    ) : null;
+  };
+
   return (
     <div className="max-w-3xl mx-auto px-4 py-8">
-      <div className="flex justify-between mb-8">
+      <div className="flex justify-between mb-8 min-w-[210mm]">
         <EditableInput
           name="Title"
           placeholder="Resume Title"
@@ -246,12 +280,14 @@ export default function ResumeEditor({ resume }: ResumeEditorProps) {
           className="text-3xl font-bold"
           onValueChange={handleTitleChange}
         />
-        <button
-          onClick={generatePDF}
-          className="mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-        >
-          Generate PDF
-        </button>
+        <div>
+          <button
+            onClick={generatePDF}
+            className="mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >
+            Generate PDF
+          </button>
+        </div>
       </div>
       <A4Page ref={contentRef}>
         {resumeZone.map((componentData, index) => {
@@ -300,44 +336,18 @@ export default function ResumeEditor({ resume }: ResumeEditorProps) {
                 <div className="absolute -left-10 top-0 h-full flex items-center">
                   <div className="flex flex-col bg-blue-500 rounded-full overflow-hidden invisible group-hover/component:visible transition-all duration-200 ease-in-out">
                     {componentData.__component === 'resume.profile' ? (
-                      <button
-                        onClick={() => setIsProfileModalOpen(true)}
-                        className="p-2 text-white hover:bg-blue-600 transition-colors"
-                      >
-                        <Pencil size={20} />
-                      </button>
+                      <>
+                        <button
+                          onClick={() => setIsProfileModalOpen(true)}
+                          className="p-2 text-white hover:bg-blue-600 transition-colors"
+                        >
+                          <Pencil size={20} />
+                        </button>
+                        {renderNewComponentAddBlock()}
+                      </>
                     ) : (
                       <>
-                        {availableComponentsToAdd.length ? (
-                          <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                              <button className="p-2 text-white bg-blue-500 hover:bg-blue-600 transition-colors">
-                                <Plus size={20} />
-                              </button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent>
-                              {availableComponentsToAdd.map(
-                                (dynamicComponentName) => (
-                                  <DropdownMenuItem
-                                    key={dynamicComponentName}
-                                    onClick={() =>
-                                      addDynamicComponent(
-                                        dynamicComponentName as ResumeZoneDynamicComponentName,
-                                      )
-                                    }
-                                  >
-                                    {
-                                      dynamicComponentsNamesMap[
-                                        dynamicComponentName as ResumeZoneDynamicComponentName
-                                      ]
-                                    }
-                                  </DropdownMenuItem>
-                                ),
-                              )}
-                            </DropdownMenuContent>
-                          </DropdownMenu>
-                        ) : null}
-
+                        {renderNewComponentAddBlock()}
                         {!isFirstComponent && (
                           <button
                             className="p-2 text-white hover:bg-blue-600 transition-colors"
