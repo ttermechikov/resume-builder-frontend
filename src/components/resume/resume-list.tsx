@@ -1,8 +1,10 @@
 import Link from 'next/link';
+import { Edit } from 'lucide-react';
 
 import { deleteResumeAction } from '@/data/actions/resume-actions';
 import { Button } from '@/components/ui/button';
 import { DeleteButton } from '../custom/delete-button';
+import { EditableResumeTitle } from './editable-resume-title';
 
 import type {
   GetResumeListResponse,
@@ -26,21 +28,30 @@ export function ResumeList({ resumeList }: ResumeListProps) {
         return (
           <div
             key={`resume-${resume.id}`}
-            className="bg-white border border-gray-200 rounded-lg shadow p-6 h-full"
+            className="bg-white rounded-lg shadow-sm p-6 flex flex-col justify-between transition-all hover:shadow-md h-full"
           >
-            <div className="mb-4">
-              <h3 className="text-xl font-bold">{resume.attributes.Title}</h3>
-              <p className="text-sm text-gray-500">
+            <div>
+              <EditableResumeTitle
+                id={resume.id}
+                initialTitle={resume.attributes.Title}
+              />
+              <p className="text-sm text-gray-500 mb-4">
                 Updated: {getFormattedResumeUpdatedDate(resume)}
               </p>
             </div>
-            <div className="flex gap-4 mt-auto">
-              <Button className="w-full" asChild>
-                <Link href={`/editor/${resume.id}`}>Edit</Link>
+            <div className="flex gap-4">
+              <Button
+                className="flex-1 bg-blue-500 hover:bg-blue-600 transition-colors"
+                asChild
+              >
+                <Link href={`/editor/${resume.id}`}>
+                  <Edit className="w-4 h-4 mr-2" /> Edit
+                </Link>
               </Button>
               <DeleteButton
                 resumeId={resume.id}
                 deleteAction={deleteResumeWithId}
+                className="flex-1 bg-red-50 text-red-600 hover:bg-red-100 transition-colors"
               />
             </div>
           </div>

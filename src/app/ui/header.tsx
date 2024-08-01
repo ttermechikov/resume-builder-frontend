@@ -1,13 +1,13 @@
-'use client';
+import React from 'react';
+import { cn } from '@/lib/utils';
 
-export default function Header({
-  children,
-}: Readonly<{
+interface HeaderProps {
   children: React.ReactNode;
-}>) {
-  return (
-    <header className="sticky top-0 flex h-16 items-center justify-between gap-4 border-b bg-background px-4 z-10 md:px-6">
-      {children}
-    </header>
-  );
+  className?: string;
 }
+
+const Header: React.FC<HeaderProps> = ({ children, className }) => (
+  <header className={cn('w-full', className)}>{children}</header>
+);
+
+export default Header;

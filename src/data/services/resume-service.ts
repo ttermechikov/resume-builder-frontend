@@ -74,3 +74,32 @@ export async function deleteResumeByIdService(resumeId: Resume['id']) {
     console.error('Resume Service Error:', error);
   }
 }
+
+export async function updateResumeTitleByIdService(
+  resumeId: Resume['id'],
+  Title: Resume['Title'],
+) {
+  if (!resumeId || !Title) {
+    throw new Error('data was not provided');
+  }
+
+  const url = new URL(`/api/resumes/${resumeId}`, baseUrl);
+  const authToken = await getAuthToken();
+
+  try {
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        data: { Title },
+      }),
+    });
+
+    return response.json();
+  } catch (error) {
+    console.error('Resume Service Error:', error);
+  }
+}
