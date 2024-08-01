@@ -171,6 +171,7 @@ export default function ResumeEditor({ resume }: ResumeEditorProps) {
           </Button>
           <Button
             onClick={() => generatePDF(contentRef.current, resume.Title)}
+            disabled={!resume.id}
             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
           >
             Generate PDF
@@ -255,7 +256,7 @@ export default function ResumeEditor({ resume }: ResumeEditorProps) {
               </div>
 
               {!isLastComponent && (
-                <hr className="my-6 border-t border-gray-300" />
+                <hr className="my-4 border-t border-gray-300" />
               )}
             </div>
           );

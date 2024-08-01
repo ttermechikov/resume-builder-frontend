@@ -85,7 +85,7 @@ export type ResumeZoneDynamicComponentProps<
 };
 
 // api responses
-type ResumeResponseData = {
+export type ResumeResponseData = {
   id: number;
   attributes: Resume;
 };

@@ -3,14 +3,14 @@ import Link from 'next/link';
 export default function CreateNewResume() {
   return (
     <Link
-      href="editor"
-      className="flex items-center justify-center w-[350px] h-[320px] border-2 border-dashed border-blue-400 rounded-lg cursor-pointer hover:bg-blue-50 transition-colors duration-300"
+      href="/editor"
+      className="flex items-center justify-center border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors duration-300 p-6"
     >
       <div className="text-center">
-        <div className="text-blue-400 mb-2">
+        <div className="text-blue-500 mb-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-8 w-8 mx-auto"
+            className="h-10 w-10 mx-auto"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -19,11 +19,13 @@ export default function CreateNewResume() {
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth="2"
-              d="M12 4v16m8-8H4"
+              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
             />
           </svg>
         </div>
-        <span className="text-blue-400 font-medium">Create New Resume</span>
+        <span className="text-gray-600 dark:text-gray-400 font-medium">
+          Create New CV
+        </span>
       </div>
     </Link>
   );

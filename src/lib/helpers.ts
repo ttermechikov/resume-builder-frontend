@@ -37,29 +37,6 @@ export const generatePDF = (
   }
 };
 
-export const createNewResume = (): Resume => ({
-  Title: 'A new resume',
-  Template: null,
-  AuthorId: 0,
-  ResumeZone: [
-    {
-      __component: 'resume.profile',
-      Name: '',
-      Email: '',
-      Phone: '',
-      Country: '',
-      City: '',
-      Website: '',
-      Linkedin: '',
-      Skype: '',
-      WhatsApp: '',
-      Telegram: '',
-      Specialization: '',
-      Summary: '',
-    },
-  ],
-});
-
 export const createEducationList = (): ResumeEducationList => ({
   __component: 'resume.education-list',
   Educations: [

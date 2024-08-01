@@ -1,5 +1,29 @@
 import ResumeEditor from '@/components/resume/resume-editor';
-import { createNewResume } from '@/lib/helpers';
+
+import type { Resume } from '@/lib/definitions';
+
+export const createNewResume = (): Resume => ({
+  Title: 'A new resume',
+  Template: null,
+  AuthorId: 0,
+  ResumeZone: [
+    {
+      __component: 'resume.profile',
+      Name: '',
+      Email: '',
+      Phone: '',
+      Country: '',
+      City: '',
+      Website: '',
+      Linkedin: '',
+      Skype: '',
+      WhatsApp: '',
+      Telegram: '',
+      Specialization: '',
+      Summary: '',
+    },
+  ],
+});
 
 export default function ResumeCreator() {
   const resume = createNewResume();
