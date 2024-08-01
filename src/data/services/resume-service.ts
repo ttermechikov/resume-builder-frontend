@@ -43,6 +43,7 @@ export async function getResumeByIdService(
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
+      cache: 'no-store',
     });
 
     return response.json();

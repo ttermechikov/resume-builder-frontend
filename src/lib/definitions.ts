@@ -3,9 +3,9 @@ export type Resume = {
   Title: string;
   Template: string | null;
   AuthorId: number;
-  createdAt: string;
-  updatedAt: string;
-  publishedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
+  publishedAt?: string;
   ResumeZone: ResumeZoneDynamicComponent[];
 };
 
@@ -85,16 +85,15 @@ export type ResumeZoneDynamicComponentProps<
 };
 
 // api responses
+type ResumeResponseData = {
+  id: number;
+  attributes: Resume;
+};
+
 export type GetResumeResponse = {
-  data: {
-    id: number;
-    attributes: Resume;
-  };
+  data: ResumeResponseData;
 };
 
 export type GetResumeListResponse = {
-  data: {
-    id: number;
-    attributes: Resume;
-  }[];
+  data: ResumeResponseData[];
 };

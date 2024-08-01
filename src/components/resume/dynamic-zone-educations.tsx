@@ -68,7 +68,7 @@ const Educations = ({
 
   return (
     <section className="mb-6">
-      <h2 className="text-xl font-semibold mb-2">Educations</h2>
+      <h2 className="text-xl font-semibold mb-2">Education</h2>
       <div className="space-y-4">
         {data.Educations?.map((experienceData, index) => (
           <div

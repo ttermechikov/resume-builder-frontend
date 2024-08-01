@@ -10,6 +10,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import type { GetResumeListResponse } from '@/lib/definitions';
+import { DeleteButton } from '../custom/delete-button';
 
 export function ResumeList({
   resumeList,
@@ -33,7 +34,7 @@ export function ResumeList({
     const updatedAt = new Intl.DateTimeFormat(
       'en-US',
       dateFormatOptions,
-    ).format(new Date(resume.attributes.updatedAt));
+    ).format(new Date(resume.attributes.updatedAt!));
 
     return (
       <Card
@@ -55,13 +56,11 @@ export function ResumeList({
             </Link>
           </div>
 
-          <div className="flex items-center  w-full">
-            <form action={deleteResumeWithId} className="w-full">
-              <input type="hidden" name="id" value={resume.id} />
-              <Button className="w-full" variant="destructive" type="submit">
-                Delete
-              </Button>
-            </form>
+          <div className="flex items-center w-full">
+            <DeleteButton
+              resumeId={resume.id}
+              deleteAction={deleteResumeWithId}
+            />
           </div>
         </CardFooter>
       </Card>
