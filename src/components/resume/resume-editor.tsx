@@ -37,16 +37,23 @@ import {
   getMissingDynamicComponents,
   dynamicComponentsNamesMap,
 } from '@/lib/helpers';
+import { FeedbackModal } from '../modals/resume-feedback';
+import { Spinner } from '../ui/spinner';
 
 type ResumeEditorProps = {
   resume: Resume;
 };
 
 export default function ResumeEditor({ resume }: ResumeEditorProps) {
+  const router = useRouter();
   const contentRef = useRef<HTMLDivElement>(null);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+
+  const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
+  const [feedback, setFeedback] = useState('');
+  const [isFeebackLoading, setIsFeebackLoading] = useState(false);
+
   const [resumeZone, setResumeZone] = useState(() => resume.ResumeZone);
-  const router = useRouter();
   const resumeProfile = useMemo(() => {
     return resumeZone.find(
       (dynamicComponent) => dynamicComponent.__component === 'resume.profile',
@@ -156,6 +163,19 @@ export default function ResumeEditor({ resume }: ResumeEditorProps) {
     ) : null;
   };
 
+  const handleGetFeedbackClick = async () => {
+    try {
+      setIsFeebackLoading(true);
+      const feedback = await getFeedbackFromChatGPT(resume);
+      setFeedback(feedback);
+      setIsFeedbackModalOpen(true);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsFeebackLoading(false);
+    }
+  };
+
   return (
     <div className="max-w-3xl mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-8 py-2 min-w-[210mm]">
@@ -163,11 +183,11 @@ export default function ResumeEditor({ resume }: ResumeEditorProps) {
 
         <div className="flex items-center gap-2">
           <Button
-            onClick={() => getFeedbackFromChatGPT(resume)}
-            disabled={!resume.id}
-            className="hidden px-4 py-2 rounded "
+            onClick={handleGetFeedbackClick}
+            disabled={!resume.id || isFeebackLoading}
+            className="px-4 py-2 rounded outline"
           >
-            Get AI Feedback
+            {isFeebackLoading ? <Spinner /> : 'Get AI Feedback'}
           </Button>
           <Button
             onClick={() => generatePDF(contentRef.current, resume.Title)}
@@ -267,6 +287,11 @@ export default function ResumeEditor({ resume }: ResumeEditorProps) {
         isOpen={isProfileModalOpen}
         onClose={() => setIsProfileModalOpen(false)}
         onSave={handleDynamicComponentChange}
+      />
+      <FeedbackModal
+        feedback={feedback}
+        isOpen={isFeedbackModalOpen}
+        onClose={() => setIsFeedbackModalOpen(false)}
       />
     </div>
   );

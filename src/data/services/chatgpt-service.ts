@@ -25,10 +25,8 @@ export const getFeedbackFromChatGPT = async (resume: {}) => {
         ],
       }),
     }).then((res) => res.json());
-    console.log('getFeedbackFromChatGPT', response);
-    const feedback = response.data.choices[0].message.content;
-    console.log('ChatGPT Feedback:', feedback);
-    // Display the feedback to the user (e.g., in a modal or alert)
+
+    return response.choices[0].message.content;
   } catch (error) {
     console.error('Error getting feedback from ChatGPT:', error);
   }

@@ -17,7 +17,7 @@ const config = {
 };
 
 const schemaRegister = z.object({
-  username: z.string().min(3).max(20, {
+  username: z.string().min(3).max(50, {
     message: 'Username must be between 3 and 20 characters',
   }),
   password: z.string().min(6).max(100, {
@@ -74,7 +74,7 @@ const schemaLogin = z.object({
     .min(3, {
       message: 'Identifier must have at least 3 or more characters',
     })
-    .max(20, {
+    .max(50, {
       message: 'Please enter a valid username or email address',
     }),
   password: z
