@@ -34,7 +34,7 @@ export default async function RootLayout({
           fontSans.variable,
         )}
       >
-        <Header className="bg-white border-b shadow-sm sticky top-0 z-10">
+        <Header className="bg-white border-b shadow-sm z-10">
           <div className="container mx-auto max-w-7xl px-6 flex items-center justify-between py-4">
             <div className="flex items-center space-x-6">
               <Link href="/" className="text-2xl font-bold text-blue-600">

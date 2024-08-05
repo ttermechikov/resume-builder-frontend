@@ -1,7 +1,18 @@
-export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1>Landing Page</h1>
-    </main>
+import { getHomePageData } from '@/data/services/home-page-service';
+import { HeroSection } from '@/components/custom/hero-section';
+
+import type { GetHomePageDataResponse } from '@/lib/definitions';
+
+export default async function Home() {
+  const data: GetHomePageDataResponse = await getHomePageData();
+
+  const heroSectionData = data.Blocks.find(
+    (block) => block.__component === 'layout.hero-section',
   );
+
+  if (!heroSectionData) {
+    return <div>Something went wrong</div>;
+  }
+
+  return <HeroSection data={heroSectionData} />;
 }

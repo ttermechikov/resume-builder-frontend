@@ -97,3 +97,27 @@ export type GetResumeResponse = {
 export type GetResumeListResponse = {
   data: ResumeResponseData[];
 };
+
+export type GetHomePageDataResponse = {
+  Title: string;
+  Descriptions: string;
+  Blocks: HeroSectionBlock[];
+};
+
+export type HeroSectionBlock = {
+  id: number;
+  __component: 'layout.hero-section';
+  Heading: string;
+  SubHeading: string;
+  Image: {
+    data: {
+      attributes: {
+        url: string;
+      };
+    };
+  };
+  Link: {
+    Url: string;
+    Text: string;
+  };
+};
