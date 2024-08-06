@@ -18,7 +18,7 @@ export async function getResumeListService(): Promise<GetResumeListResponse> {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
-      cache: 'no-store',
+      cache: 'no-cache',
     });
 
     return response.json();
@@ -43,7 +43,7 @@ export async function getResumeByIdService(
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
-      cache: 'no-store',
+      cache: 'no-cache',
     });
 
     return response.json();
