@@ -57,7 +57,7 @@ export default function EditableElement({
         onBlur={handleBlur}
         onInput={handleInput}
         className={cn(
-          'bg-transparent border-none p-0 m-0',
+          'bg-transparent border-none whitespace-pre-line p-0 m-0',
           'text-gray-600 focus:outline-none resize-none w-full',
           'focus:ring-0 focus:ring-offset-0',
           'empty:before:content-[attr(data-placeholder)]',
