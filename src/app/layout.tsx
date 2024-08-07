@@ -4,7 +4,7 @@ import { Inter as FontSans } from 'next/font/google';
 
 import { LogoutButton } from '@/components/custom/logout-button';
 import { cn } from '@/lib/utils';
-import Header from '@/app/ui/header';
+import Header from '@/components/ui/header';
 import { Button } from '@/components/ui/button';
 import { getUserMeLoader } from '@/data/services/get-user-me-loader';
 import './globals.css';
