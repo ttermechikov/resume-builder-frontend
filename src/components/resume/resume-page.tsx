@@ -8,23 +8,25 @@ import React, {
 import ReactDOM from 'react-dom';
 
 const A4_HEIGHT_MM = 297;
-const A4_HEIGHT_PX = A4_HEIGHT_MM * 3.7795275591; // Approximate conversion to pixels
+const A4_HEIGHT_PX = A4_HEIGHT_MM * 3.77953; // Approximate conversion to pixels
 
 interface A4PageProps {
   children: ReactNode;
+  isLastPage: boolean;
 }
 
-const A4Page: React.FC<A4PageProps> = ({ children }) => (
+const A4Page: React.FC<A4PageProps> = ({ children, isLastPage }) => (
   <div
     style={{
       width: '210mm',
-      minHeight: '297mm',
-      margin: '20px auto',
+      height: `${A4_HEIGHT_MM}mm`,
       padding: '20mm',
       backgroundColor: 'white',
       boxShadow: '0 0 10px rgba(0,0,0,0.1)',
       overflow: 'hidden',
+      marginBottom: isLastPage ? '' : '20px',
     }}
+    className="a4page"
   >
     {children}
   </div>
@@ -97,7 +99,13 @@ const AutoPaginate = forwardRef<HTMLDivElement, AutoPaginateProps>(
     }, [children]);
 
     return (
-      <div ref={ref} className="page-break-inside-avoid shrink-to-fit">
+      <div
+        ref={ref}
+        style={{
+          width: '210mm',
+          minHeight: '297mm',
+        }}
+      >
         <div
           ref={measureRef}
           style={{
@@ -107,9 +115,15 @@ const AutoPaginate = forwardRef<HTMLDivElement, AutoPaginateProps>(
             width: '210mm',
           }}
         />
-        {pages.map((pageContent, index) => (
-          <A4Page key={index}>{pageContent}</A4Page>
-        ))}
+        {pages.map((pageContent, index) => {
+          const isLastPage = pages.length - 1 === index;
+
+          return (
+            <A4Page key={index} isLastPage={isLastPage}>
+              {pageContent}
+            </A4Page>
+          );
+        })}
       </div>
     );
   },

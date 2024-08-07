@@ -22,7 +22,7 @@ export const generatePDF = (
   if (!element) return;
 
   const opt = {
-    margin: [-6, 0],
+    margin: [-1.7, 0],
     padding: 0,
     filename: `${resumeTitle || 'resume'}.pdf`,
     image: { type: 'jpeg', quality: 0.98 },

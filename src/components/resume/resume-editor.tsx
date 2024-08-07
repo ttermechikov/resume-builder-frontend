@@ -276,7 +276,7 @@ export default function ResumeEditor({ resume }: ResumeEditorProps) {
               </div>
 
               {!isLastComponent && (
-                <hr className="my-4 border-t border-gray-300" />
+                <hr className="my-4 border-t border-gray-300 resume-block-divider" />
               )}
             </div>
           );

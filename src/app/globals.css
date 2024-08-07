@@ -69,4 +69,8 @@
   img {
     @apply inline-block;
   }
+
+  .a4page > :last-child > .resume-block-divider:last-child {
+    display: none;
+  }
 }
